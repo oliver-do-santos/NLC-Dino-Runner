@@ -63,9 +63,9 @@ class Dinosaur(Sprite):
         self.image = JUMP_IMG[self.type]
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4
-            print(self.dino_rect.y)
+            #print(self.dino_rect.y)
             self.jump_vel -= 0.8
-            print(self.jump_vel) 
+            #print(self.jump_vel) 
 
         if self.jump_vel < -self.JUMP_VEL:
             self.dino_rect.y = self.Y_POS
@@ -90,5 +90,12 @@ class Dinosaur(Sprite):
     def draw(self,screen: pygame.Surface):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
         
-    def check_invicibility(self):
-        pass
+    def check_invicibility(self,screen):
+        if self.shield == True:
+            time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/100,2)
+            #print(time_to_show)
+            if time_to_show >= 0 and self.show_text:
+                print(time_to_show)    
+            else:
+                self.shield = False
+                self.type = DEFAULT_TYPE
