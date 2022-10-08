@@ -28,6 +28,9 @@ class Dinosaur(Sprite):
         self.jump_vel = self.JUMP_VEL
         self.setup_state ()
         self.soud = pygame.mixer.Sound("dino_runner/components/sound/SaltoEfect.wav")
+        
+        self.has_lives = False#vidas
+        self.lives_transition_time = 0
 
     def setup_state(self):
         self.has_power_up = False
@@ -97,9 +100,16 @@ class Dinosaur(Sprite):
     def check_invicibility(self,screen):
         if self.shield == True:
             time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/100,2)
+            
             #print(time_to_show)
             if time_to_show >= 0 and self.show_text:
                 print(time_to_show)    
             else:
                 self.shield = False
                 self.type = DEFAULT_TYPE
+    
+    def check_lives(self):#metodos preguntando si tiene vidas
+        if self.has_lives:
+            transition_time = round((self.lives_transition_time - pygame.time.get_ticks()) / 1000)
+            if transition_time < 0:
+                self.has_lives = False

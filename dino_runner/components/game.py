@@ -3,6 +3,7 @@
 import pygame 
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.utils.constants import BG, CLOUD, ICON, RUNNING, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 
@@ -12,11 +13,14 @@ class Game:
         pygame.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
+
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
+        self.player_heart_manager = PlayerHeartManager()
+
         self.playing = False
         self.running = False
         self.game_speed = 20
@@ -45,8 +49,12 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
+                pygame.display.quit()
+                pygame.quit()
+                exit()
 
             if event.type == pygame.KEYDOWN:
+                self.points = 0
                 self.run()
 
     def show_menu(self):
@@ -118,8 +126,12 @@ class Game:
         self.player.check_invicibility(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
+        self.player_heart_manager.draw(self.screen)
+        self.player.check_lives()
+
         pygame.display.update()
         pygame.display.flip()
+ 
 
     def draw_background(self):
         image_width = BG.get_width()
