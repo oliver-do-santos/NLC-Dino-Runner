@@ -98,15 +98,25 @@ class Dinosaur(Sprite):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
         
     def check_invicibility(self,screen):
-        if self.shield == True:
-            time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/100,2)
-            
+        if self.shield :#== True:
+            time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/1000)
+            #text = fond.render(f'shield enable for {time_to_show}',True,(0,0,0))
             #print(time_to_show)
-            if time_to_show >= 0 and self.show_text:
-                print(time_to_show)    
+            if time_to_show >= 0: #and self.show_text:
+                #print(time_to_show)    
+                fond = pygame.font.Font('freesansbold.ttf',30)
+                text = fond.render(f'Shield time : {time_to_show}',True,(40, 116, 166 ))
+                textRect = text.get_rect()
+                textRect.center = (500,40)
+                screen.blit(text,textRect)
             else:
                 self.shield = False
-                self.type = DEFAULT_TYPE
+                #self.type = DEFAULT_TYPE
+                self.update_to_default(SHIELD_TYPE)
+
+    def update_to_default(self, current_type):
+        if(self.type == current_type):
+            self.type = DEFAULT_TYPE
     
     def check_lives(self):#metodos preguntando si tiene vidas
         if self.has_lives:

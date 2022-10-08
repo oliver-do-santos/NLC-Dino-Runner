@@ -13,6 +13,8 @@ class PowerUpManager:
             if self.when_appers == points:
                 self.when_appers = random.randint(self.when_appers*200,self.when_appers*300)
                 self.power_ups.append(Shield())
+        return self.power_ups
+            
 
     def update(self,points,gamme_speed,player):
         self.generate_power_ups(points)
@@ -23,12 +25,14 @@ class PowerUpManager:
                 player.shield = True
                 player.show_text = True
                 player.type = power_up.type
+                power_up.start_time = pygame.time.get_ticks()
                 time_ramdon = random.randint(5,8)
                 player.shield_time_up = power_up.start_time + (time_ramdon * 1000)
                 self.power_ups.remove(power_up)
                 #music on
                 self.soud.play()#sonido
                 self.soud.set_volume(0.1)
+
     def draw(self,screen):
         for power_up in self.power_ups:
             power_up.draw(screen)

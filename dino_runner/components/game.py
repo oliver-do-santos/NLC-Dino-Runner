@@ -79,6 +79,7 @@ class Game:
         pygame.mixer.music.set_volume(0.1)
 
     def run(self):
+        # self.create_comment()
         # Game loop: events - update - draw
         self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups()
@@ -89,7 +90,9 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        
+    
+    def create_comment(self):
+        self.power_up_manager.reset_power_ups(self.points)
 
     def events(self):
         for event in pygame.event.get():
