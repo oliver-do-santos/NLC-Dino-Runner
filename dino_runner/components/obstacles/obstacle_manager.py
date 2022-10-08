@@ -9,7 +9,7 @@ class ObstacleManager:
 
     def __init__(self):    
         self.obstacles = []
-
+        self.soud = pygame.mixer.Sound("dino_runner/components/sound/choque.wav")
     def update(self, game):
         if len(self.obstacles) == 0:
             self.obstacle_type_list = [Bird(), Cactus()]
@@ -24,6 +24,9 @@ class ObstacleManager:
                     pygame.time.delay(500)
                     game.playing = False
                     game.deat_count +=1
+                    #music on
+                    self.soud.play()#sonido
+                    self.soud.set_volume(0.1)
                     break
                 else:
                     self.obstacles.remove(obstacle)

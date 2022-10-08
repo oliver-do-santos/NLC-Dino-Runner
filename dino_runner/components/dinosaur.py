@@ -27,6 +27,7 @@ class Dinosaur(Sprite):
         self.duck_img =  DUCKING
         self.jump_vel = self.JUMP_VEL
         self.setup_state ()
+        self.soud = pygame.mixer.Sound("dino_runner/components/sound/SaltoEfect.wav")
 
     def setup_state(self):
         self.has_power_up = False
@@ -44,6 +45,8 @@ class Dinosaur(Sprite):
 
     def update(self,user_input):                
         if user_input[pygame.K_UP] and not self.dino_jump:
+            self.soud.play()#sonido
+            self.soud.set_volume(0.1)
             self.dino_jump = True
             self.dino_run = False
             self.dino_duck = False
@@ -58,6 +61,7 @@ class Dinosaur(Sprite):
         
         if self.step_index >= 10:
             self.step_index = 0
+        
 
     def jump(self):
         self.image = JUMP_IMG[self.type]

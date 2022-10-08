@@ -7,6 +7,7 @@ class PowerUpManager:
     def __init__(self):
         self.power_ups =  []
         self.when_appers = 0
+        self.soud = pygame.mixer.Sound("dino_runner/components/sound/poder.wav")
     def generate_power_ups(self,points):
         if len(self.power_ups) == 0:
             if self.when_appers == points:
@@ -25,7 +26,9 @@ class PowerUpManager:
                 time_ramdon = random.randint(5,8)
                 player.shield_time_up = power_up.start_time + (time_ramdon * 1000)
                 self.power_ups.remove(power_up)
-
+                #music on
+                self.soud.play()#sonido
+                self.soud.set_volume(0.1)
     def draw(self,screen):
         for power_up in self.power_ups:
             power_up.draw(screen)

@@ -22,12 +22,14 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
-
+        ##
         self.points = 0
         self.deat_count = 0
         #nube
         self.y_pos_nuve = 100
         self.x_pos_nuve = 0
+        
+        pygame.mixer.music.load("dino_runner/components/sound/MusicFondo.wav")
 
     def execute(self):
         self.running = True
@@ -65,6 +67,8 @@ class Game:
         self.screen.blit(RUNNING[0],(half_screen_whidth -20,half_screen_height -140))
         pygame.display.update()
         self.handle_keyevents_on_menu()
+        pygame.mixer.music.play(-1)#sonido
+        pygame.mixer.music.set_volume(0.1)
 
     def run(self):
         # Game loop: events - update - draw
