@@ -4,7 +4,7 @@ import pygame
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
-from dino_runner.utils.constants import BG, ICON, RUNNING, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+from dino_runner.utils.constants import BG, CLOUD, ICON, RUNNING, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 
 FONT_STYLE = 'freesansbold.ttf'
 class Game:
@@ -25,6 +25,9 @@ class Game:
 
         self.points = 0
         self.deat_count = 0
+        #nube
+        self.y_pos_nuve = 100
+        self.x_pos_nuve = 0
 
     def execute(self):
         self.running = True
@@ -107,6 +110,7 @@ class Game:
         self.draw_background()
         self.draw_score()
         self.player.draw(self.screen)
+        self.draw_nuve()
         self.player.check_invicibility(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
@@ -121,3 +125,12 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+        
+    def draw_nuve(self):
+        image_height = CLOUD.get_height()
+        self.screen.blit(CLOUD, (self.x_pos_nuve, self.y_pos_nuve))
+        self.screen.blit(CLOUD, (image_height + self.x_pos_nuve, self.y_pos_nuve))
+        if self.x_pos_nuve <= -image_height:
+            self.screen.blit(CLOUD, (image_height + self.x_pos_nuve, self.y_pos_nuve))
+            self.x_pos_nuve = 1000
+        self.x_pos_nuve -= self.game_speed
